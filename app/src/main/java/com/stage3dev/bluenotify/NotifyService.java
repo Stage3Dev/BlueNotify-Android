@@ -30,6 +30,7 @@ public class NotifyService extends NotificationListenerService {
         Log.i(TAG, "**********  onNotificationPosted");
         Log.i(TAG, "ID :" + sbn.getId() + "t" + sbn.getNotification().tickerText + "t" + sbn.getPackageName());
 
+
     }
 
     @Override

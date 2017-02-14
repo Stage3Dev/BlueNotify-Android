@@ -14,4 +14,5 @@ public interface BTManager {
 
     boolean enableBluetoothRadio(boolean enable);
 
+    void startScan();
 }

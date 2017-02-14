@@ -1,4 +1,17 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
+    }
+}
+
+
 apply plugin: 'com.android.application'
+apply plugin: 'hugo'
+
 
 android {
     compileSdkVersion 25
@@ -30,16 +43,13 @@ android {
     packagingOptions {
         exclude 'META-INF/*'
     }
-
 }
-
-
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta5'
     compile 'com.android.support:appcompat-v7:25.1.1'
-    testCompile 'junit:junit:4.12'
 
     //Dagger
     compile 'com.google.dagger:dagger:2.0'
@@ -66,5 +76,6 @@ dependencies {
     //EasyPermissions
     compile 'pub.devrel:easypermissions:0.3.0'
 
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta5'
+    testCompile 'junit:junit:4.12'
+
 }

@@ -27,7 +27,7 @@ public class ConnectionModule {
     @Singleton
     BluetoothController provideBluetoothController(Context ctx) {
         BluetoothController controller = BluetoothController.getInstance().build(ctx);
-        controller.setAppUuid(UUID.fromString(ctx.getString(R.string.sdp_uuid)));
+//        controller.setAppUuid(UUID.fromString(ctx.getString(R.string.sdp_uuid)));
         return controller;
     }
 
