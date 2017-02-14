@@ -8,7 +8,6 @@ import javax.inject.Inject;
 
 import co.lujun.lmbluetoothsdk.BluetoothController;
 import co.lujun.lmbluetoothsdk.base.BluetoothListener;
-import hugo.weaving.DebugLog;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.subjects.BehaviorSubject;
@@ -45,44 +44,42 @@ public class BTManagerImpl implements BTManager, BluetoothListener {
     }
 
     @Override
-    @DebugLog
     public void startScan() {
+        Log.d(TAG, "startScan() called");
         bluetoothController.startScan();
     }
 
-    @DebugLog
     @Override
     public void onReadData(BluetoothDevice device, byte[] data) {
+        Log.d(TAG, "onReadData() called with: device = [" + device + "], data = [" + data + "]");
 
     }
 
-    @DebugLog
     @Override
     public void onActionStateChanged(int preState, int state) {
+        Log.d(TAG, "onActionStateChanged() called with: preState = [" + preState + "], state = [" + state + "]");
         btRadioSubjec.onNext(state);
     }
 
-    @DebugLog
     @Override
     public void onActionDiscoveryStateChanged(String discoveryState) {
-
+        Log.d(TAG, "onActionDiscoveryStateChanged() called with: discoveryState = [" + discoveryState + "]");
     }
 
-    @DebugLog
     @Override
     public void onActionScanModeChanged(int preScanMode, int scanMode) {
-
+        Log.d(TAG, "onActionScanModeChanged() called with: preScanMode = [" + preScanMode + "], scanMode = [" + scanMode + "]");
     }
 
-    @DebugLog
     @Override
     public void onBluetoothServiceStateChanged(int state) {
+        Log.d(TAG, "onBluetoothServiceStateChanged() called with: state = [" + state + "]");
         btConnectionSubject.onNext(state);
     }
 
-    @DebugLog
     @Override
     public void onActionDeviceFound(BluetoothDevice device, short rssi) {
+        Log.d(TAG, "onActionDeviceFound() called with: device = [" + device + "], rssi = [" + rssi + "]");
 
     }
 

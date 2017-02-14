@@ -1,5 +1,6 @@
 package com.stage3dev.bluenotify;
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.os.Bundle;
 import android.widget.Button;
@@ -16,11 +17,14 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.lujun.lmbluetoothsdk.base.State;
-import hugo.weaving.DebugLog;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
 import static com.trello.rxlifecycle2.android.RxLifecycleAndroid.bindActivity;
 
 public class MainActivity extends RxAppCompatActivity {
+
+    private static final int COARSE_LOCATION = 143;
 
     @BindView(R.id.bluetooth_switch)
     Switch btSwitch;
@@ -36,7 +40,6 @@ public class MainActivity extends RxAppCompatActivity {
 
     private int connectedState = State.STATE_DISCONNECTED;
 
-    @DebugLog
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,10 +90,20 @@ public class MainActivity extends RxAppCompatActivity {
                 });
 
         RxView.clicks(connectButton).subscribe(aVoid -> {
-//                btManager.startScan();
-            testDebugLog("Hello world!");
+
+                btManager.startScan();
         });
 
+    }
+
+    @AfterPermissionGranted(COARSE_LOCATION)
+    void startScan() {
+        if (EasyPermissions.hasPermissions(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+            btManager.startScan();
+        } else {
+            EasyPermissions.requestPermissions(this, "We need this permision to scan bluetooth",
+                    COARSE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION);
+        }
     }
 
     @Override
@@ -103,8 +116,11 @@ public class MainActivity extends RxAppCompatActivity {
         }
     }
 
-    @DebugLog
-    private void testDebugLog(String value) {
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 }
